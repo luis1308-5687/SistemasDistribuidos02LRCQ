@@ -8,14 +8,12 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-/**
- *
- * @author USUARIO
- */
 public class ServidorBancoBCP {
 
     public static void main(String[] args) {
         int puerto = 6002;
+        DatabaseManager dbManager = new DatabaseManager();
+
         try (DatagramSocket socket = new DatagramSocket(puerto)) {
             System.out.println(">>> Servidor UDP de Banco BCP iniciado en el puerto " + puerto);
 
@@ -24,28 +22,22 @@ public class ServidorBancoBCP {
                 DatagramPacket paqueteRecibido = new DatagramPacket(bufferEntrada, bufferEntrada.length);
                 socket.receive(paqueteRecibido);
 
-                String solicitud = new String(paqueteRecibido.getData(), 0, paqueteRecibido.getLength());
-                System.out.println("Mercantil (UDP): Solicitud recibida: " + solicitud);
+                String solicitud = new String(paqueteRecibido.getData(), 0, paqueteRecibido.getLength()).trim();
+                System.out.println("BCP (UDP): Solicitud recibida: \"" + solicitud + "\"");
 
                 String[] partes = solicitud.split(":");
                 String comando = partes[0];
                 String respuesta = "";
 
                 if (comando.equals("Buscar")) {
-                    String[] datos = partes[1].split("-");
-                    String ci = datos[0];
-                    if (ci.equals("11021654")) {
-                        respuesta = "657654-6000";
-                    } else {
-                        respuesta = "";
-                    }
+                    String ci = partes[1];
+                    respuesta = dbManager.buscarCuentasPorCIyBanco(ci, "BCP");
                 } else if (comando.equals("Congelar")) {
-                    String[] datos = partes[1].split("-");
-                    String nroCuenta = datos[0];
+                    String nroCuenta = partes[1];
                     if (nroCuenta.equals("657654")) {
-                        respuesta = "SI-657654";
+                        respuesta = "SI-congelada";
                     } else {
-                        respuesta = "NO-no encontrado";
+                        respuesta = "NO-cuenta no encontrada";
                     }
                 }
 
@@ -54,11 +46,10 @@ public class ServidorBancoBCP {
                 int puertoCliente = paqueteRecibido.getPort();
                 DatagramPacket paqueteRespuesta = new DatagramPacket(bufferSalida, bufferSalida.length, direccionCliente, puertoCliente);
                 socket.send(paqueteRespuesta);
-                System.out.println("Mercantil (UDP): Respuesta enviada: " + respuesta);
+                System.out.println("BCP (UDP): Respuesta enviada: \"" + respuesta + "\"");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

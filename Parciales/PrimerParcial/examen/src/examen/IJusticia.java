@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  *
  * @author USUARIO
- */.
+ */
 public interface IJusticia extends Remote {
     ArrayList<Cuenta> ConsultarCuentas(String ci, String nombres, String apellidos) throws RemoteException;  
 }

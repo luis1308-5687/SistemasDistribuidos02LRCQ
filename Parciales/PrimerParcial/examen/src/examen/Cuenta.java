@@ -48,6 +48,14 @@ public class Cuenta implements Serializable {
         return apellidos;
     }
 
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
     @Override
     public String toString() {
         return "Banco: " + banco + ", Nro. Cuenta: " + nroCuenta + ", Saldo: " + saldo + " Bs.";

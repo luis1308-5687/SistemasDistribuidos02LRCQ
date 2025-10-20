@@ -4,6 +4,7 @@
  */
 package examen;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -12,10 +13,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-/**
- *
- * @author USUARIO
- */
 public class JUSTICIA extends UnicastRemoteObject implements IJusticia {
 
     protected JUSTICIA() throws RemoteException {
@@ -24,30 +21,51 @@ public class JUSTICIA extends UnicastRemoteObject implements IJusticia {
 
     @Override
     public ArrayList<Cuenta> ConsultarCuentas(String ci, String nombres, String apellidos) throws RemoteException {
-        System.out.println("JUSTICIA: Recibida solicitud de consulta para CI: " + ci);
-        ArrayList<Cuenta> cuentasEncontradas = new ArrayList<>();
-        String solicitud = "Buscar:" + ci + "-" + nombres + "-" + apellidos;
+        System.out.println("JUSTICIA: Solicitud de consulta para CI: " + ci);
+        
+        boolean personaEncontrada = verificarEnSegip(ci, nombres, apellidos);
 
-        try (Socket socketTCP = new Socket("localhost", 6055); 
+        if (personaEncontrada) {
+            System.out.println("JUSTICIA: Persona encontrada en SEGIP. Consultando cuentas en ASFI...");
+            try {
+                // AQUÍ ESTÁ LA CORRECCIÓN: Le decimos que busque a ASFI en el puerto 2000
+                IASFI asfi = (IASFI) Naming.lookup("rmi://192.168.43.236:2000/ASFI");
                 
-            PrintWriter salida = new PrintWriter(socketTCP.getOutputStream(), true); //enviar
-            BufferedReader entrada = new BufferedReader(new InputStreamReader(socketTCP.getInputStream()))) { //recibir
+                ArrayList<Cuenta> cuentas = asfi.ConsultarCuentas(ci);
+                
+                for(Cuenta c : cuentas) {
+                    c.setNombres(nombres);
+                    c.setApellidos(apellidos);
+                }
+                return cuentas;
 
-            salida.println(solicitud);
-            String respuestaTCP = entrada.readLine();
-
-            if (!respuestaTCP.isEmpty()) {
-                String[] cuentaData = respuestaTCP.split("-");
-                String nroCuenta = cuentaData[0];
-                double saldo = Double.parseDouble(cuentaData[1]);
-                cuentasEncontradas.add(new Cuenta(Banco.BCP, nroCuenta, saldo, ci, nombres, apellidos));
+            } catch (Exception e) {
+                System.err.println("JUSTICIA: Error al conectar o consultar ASFI via RMI.");
+                e.printStackTrace();
+                return new ArrayList<>();
             }
-        } catch (Exception e) {
-            System.out.println("ASFI: Error al comunicar con Segip (TCP)");
+        } else {
+            System.out.println("JUSTICIA: Persona no encontrada en SEGIP. Devolviendo lista vacía.");
+            return new ArrayList<>();
         }
-
-        System.out.println("ASFI: Devolviendo " + cuentasEncontradas.size() + " cuentas.");
-        return cuentasEncontradas;
     }
 
+    private boolean verificarEnSegip(String ci, String nombres, String apellidos) {
+        String solicitud = "buscar:" + ci + "-" + nombres + "-" + apellidos;
+        try (Socket socketTCP = new Socket("192.168.43.236", 6055);
+             PrintWriter salida = new PrintWriter(socketTCP.getOutputStream(), true);
+             BufferedReader entrada = new BufferedReader(new InputStreamReader(socketTCP.getInputStream()))) {
+            
+            salida.println(solicitud);
+            String respuestaTCP = entrada.readLine();
+            System.out.println("JUSTICIA: Respuesta de SEGIP: " + respuestaTCP);
+            
+            return "resultado:encontrado".equalsIgnoreCase(respuestaTCP);
+
+        } catch (Exception e) {
+            System.err.println("JUSTICIA: Error al comunicar con Segip (TCP)");
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

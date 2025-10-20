@@ -1,0 +1,10 @@
+C:\Users\luisc\source\repos\SegipFrontend\SegipFrontend\bin\Debug\SegipFrontend.exe.config
+C:\Users\luisc\source\repos\SegipFrontend\SegipFrontend\bin\Debug\SegipFrontend.exe
+C:\Users\luisc\source\repos\SegipFrontend\SegipFrontend\bin\Debug\SegipFrontend.pdb
+C:\Users\luisc\source\repos\SegipFrontend\SegipFrontend\obj\Debug\SegipFrontend.csproj.AssemblyReference.cache
+C:\Users\luisc\source\repos\SegipFrontend\SegipFrontend\obj\Debug\SegipFrontend.Form1.resources
+C:\Users\luisc\source\repos\SegipFrontend\SegipFrontend\obj\Debug\SegipFrontend.Properties.Resources.resources
+C:\Users\luisc\source\repos\SegipFrontend\SegipFrontend\obj\Debug\SegipFrontend.csproj.GenerateResource.cache
+C:\Users\luisc\source\repos\SegipFrontend\SegipFrontend\obj\Debug\SegipFrontend.csproj.CoreCompileInputs.cache
+C:\Users\luisc\source\repos\SegipFrontend\SegipFrontend\obj\Debug\SegipFrontend.exe
+C:\Users\luisc\source\repos\SegipFrontend\SegipFrontend\obj\Debug\SegipFrontend.pdb

@@ -1,0 +1,10 @@
+C:\Users\luisc\source\repos\CotizacionInterfaz\CotizacionInterfaz\obj\Debug\CotizacionInterfaz.csproj.AssemblyReference.cache
+C:\Users\luisc\source\repos\CotizacionInterfaz\CotizacionInterfaz\obj\Debug\CotizacionInterfaz.Form1.resources
+C:\Users\luisc\source\repos\CotizacionInterfaz\CotizacionInterfaz\obj\Debug\CotizacionInterfaz.Properties.Resources.resources
+C:\Users\luisc\source\repos\CotizacionInterfaz\CotizacionInterfaz\obj\Debug\CotizacionInterfaz.csproj.GenerateResource.cache
+C:\Users\luisc\source\repos\CotizacionInterfaz\CotizacionInterfaz\obj\Debug\CotizacionInterfaz.csproj.CoreCompileInputs.cache
+C:\Users\luisc\source\repos\CotizacionInterfaz\CotizacionInterfaz\bin\Debug\CotizacionInterfaz.exe.config
+C:\Users\luisc\source\repos\CotizacionInterfaz\CotizacionInterfaz\bin\Debug\CotizacionInterfaz.exe
+C:\Users\luisc\source\repos\CotizacionInterfaz\CotizacionInterfaz\bin\Debug\CotizacionInterfaz.pdb
+C:\Users\luisc\source\repos\CotizacionInterfaz\CotizacionInterfaz\obj\Debug\CotizacionInterfaz.exe
+C:\Users\luisc\source\repos\CotizacionInterfaz\CotizacionInterfaz\obj\Debug\CotizacionInterfaz.pdb
