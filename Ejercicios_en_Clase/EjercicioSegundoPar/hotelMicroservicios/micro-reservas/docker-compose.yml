@@ -1,0 +1,90 @@
+version: '3.8'
+
+# Definimos todos los servicios (contenedores) que necesitamos
+services:
+
+  # 1. Servicio de Base de Datos MongoDB (para Reservas)
+  mongo_db:
+    image: mongo:latest # Usa la imagen oficial de Mongo
+    container_name: mongo_db
+    ports:
+      - "27017:27017" # Expone el puerto de Mongo a tu PC (para DBeaver/Tadpole)
+    volumes:
+      - mongo-data:/data/db # Persiste los datos de Mongo
+    networks:
+      - hotel-net
+
+  # 2. Microservicio de Login
+  login-service:
+    build: ./micro-login # Dónde construirlo (usa el Dockerfile de esa carpeta)
+    container_name: login-service
+    ports:
+      - "3001:3001" # Expone el puerto 3001 a tu PC (opcional, bueno para debug)
+    environment:
+      - PORT=3001
+      - DB_HOST=host.docker.internal # <-- ¡MUY IMPORTANTE!
+      - DB_USERNAME=root
+      - DB_PASSWORD= # Tu contraseña de XAMPP (vacía)
+      - DB_DATABASE=hotel_admin # Tu BD de Laravel
+      - DB_PORT=3310 # <-- ¡USA EL PUERTO 3307 que configuraste!
+      - JWT_SECRET=TU_SECRET0_MUY_SEGURO_Y_LARGO
+    networks:
+      - hotel-net
+    depends_on:
+      - mongo_db # Asegura que Mongo inicie primero (buena práctica)
+
+  # 3. Microservicio de Habitaciones
+  habitaciones-service:
+    build: ./micro-habitaciones
+    container_name: habitaciones-service
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+      - DB_HOST=host.docker.internal # <-- ¡IMPORTANTE! Conecta al MySQL de tu PC
+      - DB_USERNAME=root
+      - DB_PASSWORD=
+      - DB_DATABASE=hotel_admin
+      - DB_PORT=3310 # <-- ¡USA EL PUERTO 3307!
+      - JWT_SECRET=TU_SECRET0_MUY_SEGURO_Y_LARGO
+    networks:
+      - hotel-net
+
+  # 4. Microservicio de Reservas
+  reservas-service:
+    build: ./micro-reservas
+    container_name: reservas-service
+    ports:
+      - "3003:3003"
+    environment:
+      - PORT=3003
+      - MONGO_URI=mongodb://mongo_db:27017/reservas_db # Se conecta al servicio 'mongo_db'
+      - JWT_SECRET=TU_SECRET0_MUY_SEGURO_Y_LARGO
+    networks:
+      - hotel-net
+    depends_on:
+      - mongo_db
+
+  # 5. El Proxy Inverso Nginx (El Recepcionista)
+  nginx-proxy:
+    image: nginx:latest
+    container_name: nginx-proxy
+    ports:
+      - "80:80" # <-- ¡El único puerto principal que expones al mundo!
+    volumes:
+      # Monta tu archivo de configuración dentro del contenedor de Nginx
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - hotel-net
+    depends_on:
+      - login-service
+      - habitaciones-service
+      - reservas-service
+
+# Volúmenes para persistir datos
+volumes:
+  mongo-data:
+
+# Red interna para que los contenedores se comuniquen
+networks:
+  hotel-net:
