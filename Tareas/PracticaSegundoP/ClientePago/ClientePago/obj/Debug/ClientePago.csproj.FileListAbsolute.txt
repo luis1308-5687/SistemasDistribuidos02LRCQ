@@ -1,0 +1,10 @@
+C:\Users\luisc\source\repos\ClientePago\ClientePago\bin\Debug\ClientePago.exe.config
+C:\Users\luisc\source\repos\ClientePago\ClientePago\bin\Debug\ClientePago.exe
+C:\Users\luisc\source\repos\ClientePago\ClientePago\bin\Debug\ClientePago.pdb
+C:\Users\luisc\source\repos\ClientePago\ClientePago\obj\Debug\ClientePago.csproj.AssemblyReference.cache
+C:\Users\luisc\source\repos\ClientePago\ClientePago\obj\Debug\ClientePago.Form1.resources
+C:\Users\luisc\source\repos\ClientePago\ClientePago\obj\Debug\ClientePago.Properties.Resources.resources
+C:\Users\luisc\source\repos\ClientePago\ClientePago\obj\Debug\ClientePago.csproj.GenerateResource.cache
+C:\Users\luisc\source\repos\ClientePago\ClientePago\obj\Debug\ClientePago.csproj.CoreCompileInputs.cache
+C:\Users\luisc\source\repos\ClientePago\ClientePago\obj\Debug\ClientePago.exe
+C:\Users\luisc\source\repos\ClientePago\ClientePago\obj\Debug\ClientePago.pdb

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://tempuri.org/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="verDeuda">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CI" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="primerApellido" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="segundoApellido" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="nombres" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="verDeudaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="verDeudaResult" type="tns:ArrayOfDeuda" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDeuda">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Deuda" nillable="true" type="tns:Deuda" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Deuda">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Empresa" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Concepto" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Monto" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PagarDeuda">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="c" type="tns:Deuda" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PagarDeudaResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="verDeudaSoapIn">
+    <wsdl:part name="parameters" element="tns:verDeuda" />
+  </wsdl:message>
+  <wsdl:message name="verDeudaSoapOut">
+    <wsdl:part name="parameters" element="tns:verDeudaResponse" />
+  </wsdl:message>
+  <wsdl:message name="PagarDeudaSoapIn">
+    <wsdl:part name="parameters" element="tns:PagarDeuda" />
+  </wsdl:message>
+  <wsdl:message name="PagarDeudaSoapOut">
+    <wsdl:part name="parameters" element="tns:PagarDeudaResponse" />
+  </wsdl:message>
+  <wsdl:portType name="PagosServiceSoap">
+    <wsdl:operation name="verDeuda">
+      <wsdl:input message="tns:verDeudaSoapIn" />
+      <wsdl:output message="tns:verDeudaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PagarDeuda">
+      <wsdl:input message="tns:PagarDeudaSoapIn" />
+      <wsdl:output message="tns:PagarDeudaSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PagosServiceSoap" type="tns:PagosServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="verDeuda">
+      <soap:operation soapAction="http://tempuri.org/verDeuda" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PagarDeuda">
+      <soap:operation soapAction="http://tempuri.org/PagarDeuda" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PagosServiceSoap12" type="tns:PagosServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="verDeuda">
+      <soap12:operation soapAction="http://tempuri.org/verDeuda" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PagarDeuda">
+      <soap12:operation soapAction="http://tempuri.org/PagarDeuda" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PagosService">
+    <wsdl:port name="PagosServiceSoap" binding="tns:PagosServiceSoap">
+      <soap:address location="http://localhost:51312/PagosService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PagosServiceSoap12" binding="tns:PagosServiceSoap12">
+      <soap12:address location="http://localhost:51312/PagosService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
