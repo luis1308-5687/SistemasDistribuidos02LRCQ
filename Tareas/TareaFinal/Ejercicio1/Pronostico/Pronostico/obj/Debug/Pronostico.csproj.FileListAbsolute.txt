@@ -1,0 +1,13 @@
+C:\Users\luisc\source\repos\Pronostico\Pronostico\bin\Debug\Pronostico.exe.config
+C:\Users\luisc\source\repos\Pronostico\Pronostico\bin\Debug\Pronostico.exe
+C:\Users\luisc\source\repos\Pronostico\Pronostico\bin\Debug\Pronostico.pdb
+C:\Users\luisc\source\repos\Pronostico\Pronostico\bin\Debug\Newtonsoft.Json.dll
+C:\Users\luisc\source\repos\Pronostico\Pronostico\bin\Debug\Newtonsoft.Json.xml
+C:\Users\luisc\source\repos\Pronostico\Pronostico\obj\Debug\Pronostico.csproj.AssemblyReference.cache
+C:\Users\luisc\source\repos\Pronostico\Pronostico\obj\Debug\Pronostico.Form1.resources
+C:\Users\luisc\source\repos\Pronostico\Pronostico\obj\Debug\Pronostico.Properties.Resources.resources
+C:\Users\luisc\source\repos\Pronostico\Pronostico\obj\Debug\Pronostico.csproj.GenerateResource.cache
+C:\Users\luisc\source\repos\Pronostico\Pronostico\obj\Debug\Pronostico.csproj.CoreCompileInputs.cache
+C:\Users\luisc\source\repos\Pronostico\Pronostico\obj\Debug\Pronostico.csproj.Up2Date
+C:\Users\luisc\source\repos\Pronostico\Pronostico\obj\Debug\Pronostico.exe
+C:\Users\luisc\source\repos\Pronostico\Pronostico\obj\Debug\Pronostico.pdb
